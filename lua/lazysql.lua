@@ -6,7 +6,6 @@ local event = require("nui.utils.autocmd").event
 M.setup = function() end
 
 local function islazysqlinstalled()
-	--return false
 	return vim.fn.executable("lazysql") == 1
 end
 
@@ -54,12 +53,33 @@ local function showlazysqlui()
 		},
 	})
 
+	local function closelazysqlpopup(currentpopup)
+		currentpopup:unmount()
+		vim.cmd("silent! :checktime")
+	end
 	popup:mount()
 
 	popup:on(event.BufLeave, function()
-		popup:unmount()
+		closelazysqlpopup(popup)
 	end)
+
+	popup:map("i", "q", function()
+		closelazysqlpopup(popup)
+	end)
+
+	popup:on({ "VimResized", "WinResized" }, function()
+		popup:update_layout()
+		vim.api.nvim_win_set_cursor(0, { 1, 0 })
+	end)
+
+	vim.fn.termopen("lazysql", {
+		on_exit = function()
+			closelazysqlpopup(popup)
+		end,
+	})
+	vim.cmd("startinsert")
 end
+
 M.toggle = function()
 	if not islazysqlinstalled() then
 		showcantfindlazysqlpopup()
