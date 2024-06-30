@@ -3,6 +3,8 @@
 A Simple Plugin for calling [lazysql](https://github.com/jorgerojas26/lazysql) from within neovim.
 In the same vein [crnvl96/lazydocker.nvim](https://github.com/crnvl96/lazydocker.nvim/tree/main) and [kdheepak/lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
 
+![screenshot](screenshot.png)
+
 # Alternatives
 
 - [akinsho/nvim-toggleterm](https://github.com/akinsho/nvim-toggleterm.lua#custom-terminals)
